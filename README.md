@@ -1,4 +1,4 @@
-Attempt to re-create SIRENE daily updates from INSEE API.
+Attempt to re-create SIRENE daily updates from INSEE API (https://api.insee.fr/)
 And result analysis to compare with provided stocks
 
 0. download the 4 stocks from data.gouv.fr for 2 months (2 stocks per month Etablissements/Unites Legales)
