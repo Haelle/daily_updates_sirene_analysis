@@ -1,4 +1,7 @@
 /daily_updates/*
+!/daily_updates/.keep
 /stocks/*
+!/stocks/.keep
 /stocks_generated/*
+!/stocks_generated/.keep
 .token
