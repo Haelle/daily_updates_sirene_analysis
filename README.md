@@ -2,7 +2,7 @@ Attempt to re-create SIRENE daily updates from INSEE API (https://api.insee.fr/)
 
 There are a lot of manuals operations ; and it generates [result analysis](#bilans) to compare with stocks provided by INSEE.
 
-Ruby & PostgreSQL are mandatory.
+Ruby & PostgreSQL are mandatory. Install Ruby gems with `bundle install`
 
 # 1. Setup & downloads
 From [SIRENE page on data.gouv.fr](https://www.data.gouv.fr/fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/) download :
@@ -42,7 +42,11 @@ In both `generate_stock_unites_legales.sql` and `generate_stock_etablissements.s
 Previous month stocks + daily updates are generated in `/stocks_generated`.
 
 # 4. Sort all stocks to compare them
-run `sort_stocks.rb` : in order to easly compare stocks sort them
+run to sort these files in order to compare them :
+```bash
+sort -t , -k 1n stocks_generated/UnitesLegales.csv > stocks_generated/UnitesLegales_sorted.csv
+sort -t , -k 3n stocks_generated/Etablissements.csv > stocks_generated/Etablissements_sorted.csv
+```
 
 # 5. Compare stocks and generated an HTML report
 run `compare_stocks.rb` : compare files and generate HTML differences
@@ -51,3 +55,15 @@ run `compare_stocks.rb` : compare files and generate HTML differences
 
 - quelques timeout sont arrivés lors de la récupération des daily updates (qui peuvent être du au rate limiting)
 - les entreprises passant de 'diffusibles' à 'non-diffusibles' et vice et versa rend l'analyse complexe (+9000 entreprises en plus dans le stock généré)
+
+## Détails
+
+Trié en ordre d'importance (aucun ordre de grandeur désolé), en tout moins de 1% d'erreurs :
+- Le stock généré contient bien des entreprises non-diffusibles (ie: 304371800 / 311861975 / 305313348). <= *la très large majorité des écarts*
+- Il y a de nombreuses différences sur les dates de derniers traitements :
+  - ça peut être du au fait que les daily update n'ont pas été générée au bon moment
+  - les dates qui posent problèmes sont en fin de mois
+- certaines entreprises apparaissent dans le nouveau stock qui sortent de nul part :
+  - 312030257 ; aucune date de dernier traitement et l'entreprise date de 1978 fermée depuis)
+  - 312030273 : dernier traitement 2007 aussi fermée
+- des corrections 'techniques' ; ajouts de guillements (ie: 322087750 ; 'GFA DES WACQUES' => 'GFA "DES WACQUES"' / 309467611)

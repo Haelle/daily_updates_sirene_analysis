@@ -4,4 +4,6 @@
 !/stocks/.keep
 /stocks_generated/*
 !/stocks_generated/.keep
+/tmp/*
+!/tmp/.keep
 .token
