@@ -2,6 +2,10 @@ Attempt to re-create SIRENE daily updates from INSEE API (https://api.insee.fr/)
 
 There are a lot of manuals operations ; and it generates [result analysis](#bilans) to compare with stocks provided by INSEE.
 
+Results can be seen here:
+- [UnitesLegales](http://htmlpreview.github.io/?https://raw.githubusercontent.com/Haelle/daily_updates_sirene_analysis/master/reports/report_unites_legales.html)
+- [Etablissements](http://htmlpreview.github.io/?https://raw.githubusercontent.com/Haelle/daily_updates_sirene_analysis/master/reports/report_etablissements.html)
+
 Ruby & PostgreSQL are mandatory. Install Ruby gems with `bundle install`
 
 # 1. Setup & downloads
