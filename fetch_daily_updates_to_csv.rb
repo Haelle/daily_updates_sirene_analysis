@@ -7,8 +7,8 @@ require 'csv'
 require 'pry'
 
 # parameters ; it will generate csv files 'from' to 'to'
-from = Date.parse '2019/6/1'
-to   = Date.parse '2019/6/30'
+from = Date.parse '2019/10/1'
+to   = Date.parse '2019/11/1' # excluded
 
 # constants
 NB_MAX = 1_000
@@ -134,7 +134,15 @@ def fetch_etablissements(current_day:)
       body[:etablissements].each do |elt|
         last_period = elt[:periodesEtablissement].first
         elt.delete(:periodesEtablissement)
-        elt.merge(last_period)
+        elt.merge!(last_period)
+
+        adresse = elt[:adresseEtablissement]
+        elt.delete(:adresseEtablissement)
+        elt.merge!(adresse)
+
+        adresse2 = elt[:adresse2Etablissement]
+        elt.delete(:adresse2Etablissement)
+        elt.merge!(adresse2)
 
         csv_data = @csv_header_etablissement.map { |h| elt[h] }.to_csv
         f.puts csv_data
